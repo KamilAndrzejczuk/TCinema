@@ -1,3 +1,4 @@
+import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { ValidatorService } from './services/validator.service';
 import { BrowserModule } from "@angular/platform-browser";
@@ -14,6 +15,7 @@ import { LoginComponent } from "./login/login.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { RegisterComponent } from "./register/register.component";
 import { ProfileComponent } from "./profile/profile.component";
+import { UserReservationHistoryComponent } from './user-reservation-history/user-reservation-history.component';
 
 const appRoutes: Routes = [
   {
@@ -34,7 +36,8 @@ const appRoutes: Routes = [
   },
   {
     path: "profile",
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate:[AuthGuard]
   }
 ];
 
@@ -46,16 +49,17 @@ const appRoutes: Routes = [
     DashboardComponent,
     RegisterComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    UserReservationHistoryComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
     HttpModule,
-    FlashMessagesModule.forRoot()
+    FlashMessagesModule
   ],
-  providers: [ValidatorService,AuthService],
+  providers: [ValidatorService,AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

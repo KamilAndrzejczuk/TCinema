@@ -42,7 +42,12 @@ router.post("/authenticate", (req, res) => {
       });
     } else {
       User.comparePassword(password, user.password, (err, isMatch) => {
-        if (err) throw err;
+        if (err){
+          res.json({
+            success: false,
+            msg: err
+          });
+        }
         if (isMatch) {
           let token = jwt.sign({data:user}, config.secret, {
             expiresIn: 604800
