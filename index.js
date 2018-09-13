@@ -20,6 +20,7 @@ mongoose.connection.on('error', (err) => {
 const app = express();
 const port = 3000;
 
+app.use(cors());
 
 app.listen(port,() => {
     console.log("server listening on port " + port);
@@ -43,5 +44,4 @@ require('./config/passport')(passport);
 app.use('/users', usersRoute);
 
 // dzieki temu moge uzywac post get itp na jednym adresie!
-app.use(cors());
 
