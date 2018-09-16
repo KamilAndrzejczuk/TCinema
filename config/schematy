@@ -1,0 +1,11 @@
+MOVIE :
+
+name,
+category,
+length,
+photoURL,
+producer,
+actors,
+rating,
+aboutMovie,
+releaseDate,
