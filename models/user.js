@@ -27,15 +27,15 @@ const UserSchema = mongoose.Schema({
 
 const User = (module.exports = mongoose.model("User", UserSchema));
 
-module.exports.getUserById = function(id, callback) {
+module.exports.getUserById = function (id, callback) {
   User.findById(id, callback);
 };
 
-module.exports.getUserByEmail = function(email, callback) {
+module.exports.getUserByEmail = function (email, callback) {
   User.findOne({ email: email }, callback);
 };
 
-module.exports.addUser = function(newUser, callback) {
+module.exports.addUser = function (newUser, callback) {
   User.getUserByEmail(newUser.email, (err, user) => {
     if (err) throw err;
     bcrypt.genSalt(10, (err, salt) => {
@@ -49,7 +49,7 @@ module.exports.addUser = function(newUser, callback) {
   });
 };
 
-module.exports.comparePassword = function(
+module.exports.comparePassword = function (
   candidatePassword,
   hashedPassword,
   callback

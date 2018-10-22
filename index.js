@@ -7,6 +7,10 @@ const passport = require('passport');
 const config = require('./config/database');
 
 const usersRoute = require('./routes/users');
+const seanceRoute = require('./routes/seances');
+const seatsRoute = require('./routes/seats');
+const movieRoute = require('./routes/movies');
+const roomsRoute = require('./routes/rooms');
 mongoose.connect(config.database);
 
 mongoose.connection.on('connected', () => {
@@ -29,7 +33,7 @@ app.listen(port,() => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/',(req, res) => {
-res.send("Invalid endpoint");
+res.send("Pusto");
 })
 
 // dzieki temu moge brac templatki w formacie .json
@@ -40,8 +44,10 @@ app.use(passport.session());
 
 require('./config/passport')(passport);
 
-
+app.use('/seance', seanceRoute);
 app.use('/users', usersRoute);
-
+app.use('/movie', movieRoute);
+app.use('/seats', seatsRoute);
+app.use('/room', roomsRoute);
 // dzieki temu moge uzywac post get itp na jednym adresie!
 
