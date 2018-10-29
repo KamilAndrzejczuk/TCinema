@@ -1,0 +1,165 @@
+<br>
+<div>
+  <div id="seance">
+  </div>
+
+</div>
+<div class="container" id="movie">
+
+  <form action=""></form>
+
+  <table class="table table-striped">
+    <thead  style="text-align: center;">
+      <tr>
+        <th style="width: 20%" >Title</th>
+        <th style="width: 20%">Production Year</th>
+        <th style="width: 20%">Director</th>
+        <th style="width: 30%"></th>
+        <th style="width: 10%">Action</th>
+      </tr>
+    </thead>
+    <tbody style="text-align: center;">
+      <tr *ngFor="let movie of movies">
+        <th scope="row">{{movie.title}}</th>
+        <td>{{movie.productionYear}}</td>
+        <td>{{movie.director}}</td>
+        <td></td>
+        <td style="text-align: right;"><button (click)="deleteMovie(movie)" class="btn btn-danger">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <hr>
+  <br>
+  <form>
+
+    <div class="form-group">
+      <label for="columns">Title</label>
+      <input type="text" class="form-control" name="cols" [(ngModel)]="newMovieTitle" placeholder="Enter title">
+    </div>
+    <div class="form-group">
+      <label for="columns">Year of Production</label>
+      <input type="text" class="form-control" name="cols" [(ngModel)]="newMovieProductionYear" placeholder="Enter year of production">
+    </div>
+    <div class="form-group">
+      <label for="rows">Director</label>
+      <input type="text" class="form-control" name="rows" [(ngModel)]="newMovieDirector" placeholder="Enter director's first and last name">
+    </div>
+    <button class="btn btn-primary inline" (click)="addMovie()">Add Movie</button>
+  </form>
+</div>
+<hr>
+<div class="container">
+
+  <table class="table table-striped">
+    <thead style="text-align: center;" >
+      <tr>
+        <th style="width: 10%">Number</th>
+        <th style="width: 10%">Columns</th>
+        <th style="width: 10%">Rows</th>
+        <th style="width: 60%"></th>
+        <th style="width: 10%">Action</th>
+      </tr>
+    </thead>
+    <tbody style="text-align: center;">
+      <tr *ngFor="let room of rooms">
+        <th scope="row">{{room.number}}</th>
+        <td>{{room.columns}}</td>
+        <td>{{room.rows}}</td>
+        <td></td>
+        <td><button (click)="deleteRoom(room)" class="btn btn-danger">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <hr>
+  <br>
+  <form>
+
+    <div class="form-group">
+      <label for="columns">Number of columns</label>
+      <input type="text" class="form-control" [(ngModel)]="newRoomColumns" name="cols" placeholder="Enter number of columns">
+    </div>
+    <div class="form-group">
+      <label for="rows">Number of rows</label>
+      <input type="text" class="form-control" [(ngModel)]="newRoomRows" name="rows" placeholder="Enter number of Rows">
+    </div>
+    <button class="btn btn-primary inline " (click)="addRoom()">Add Room</button>
+  </form>
+</div>
+<hr>
+<div class="container">
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Room Number</th>
+        <th>Seance Dates</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let seance of seances">
+        <td>{{seance.movie.title}}</td>
+        <td>{{seance.room.number}}</td>
+        <td style="align: center;" >  <span style="font-size: 16px; margin-top:5px; margin-right: 5px;" *ngFor="let date of seance.dates" class="badge badge-info">{{date
+            | date: 'yyyy/MM/dd HH:mm'}}</span></td>
+      </tr>
+    </tbody>
+  </table>
+ 
+  <br>
+  <hr>
+  <br>
+  <form>
+
+    <div class="form-group">
+      <label for="rows">Select movie for new seance</label>
+      <select class="form-control" (change)="newSeanceMovieChanger($event)">
+        <option *ngFor="let movie of movies" [value]="movie.title">{{movie.title}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="rows">Select room for new seance</label>
+      <select class="form-control" (change)="newSeanceRoomChanger($event)">
+        <option *ngFor="let room of rooms" [value]="room.number">{{room.number}} </option>
+      </select>
+    </div>
+
+    <div style="border: 3px solid lightblue; min-height: 200px;" class="form-group">
+      <h2 style="margin-top: 20px;" class="text-center">Selected Dates</h2>
+      <div class="row">
+        <span (click)="removeDateTimeFromSeance(seanceDate)" style="font-size: 20px; margin-left: 30px; margin-top: 15px;"
+          class="badge removeButton badge-success" *ngFor="let seanceDate of newSeanceDates">{{seanceDate | date:
+          'yyyy/mm/dd
+          HH:mm'}}</span>
+      </div>
+    </div>
+    <div style="border: 3px solid green; margin-bottom: 20px;" class="container">
+      <div class="row" *ngFor="let day of daysToView2">
+        <div style="margin-bottom:30px;" class="col-2">
+          {{day | date: 'yyyy/MM/dd'}}
+        </div>
+        <div class="row-10" *ngFor="let hour of hoursToView">
+
+          <button class="btn btn-primary" (click)="addDateTimeToSeance(day, hour)" style="margin-left: 3px; margin-top: 3px; margin-bottom: 5px;"
+            class="btn">
+            {{hour}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button style="margin: 10px;" class="btn btn-primary inline float-right" (click)="nextDates()">Next Dates</button>
+    <button style="margin: 10px;" class="btn btn-primary inline float-left" (click)="previousDates()" *ngIf="datepickerPage > 0">Previous
+      Page</button>
+
+    <br><br><br>
+    <button class="btn btn-primary btn-block inline float-right" (click)="addSeance()">Add Seance</button>
+  </form>
+
+  <div style="height: 300px;">
+
+  </div>
