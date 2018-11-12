@@ -51,3 +51,16 @@ app.use('/seats', seatsRoute);
 app.use('/room', roomsRoute);
 // dzieki temu moge uzywac post get itp na jednym adresie!
 
+var originsWhitelist = [
+    'http://localhost:4200',      //this is my front-end url for development
+     'http://www.myproductionurl.com'
+  ];
+  var corsOptions = {
+    origin: function(origin, callback){
+          var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+          callback(null, isWhitelisted);
+    },
+    credentials:true
+  }
+
+app.use(cors(corsOptions));

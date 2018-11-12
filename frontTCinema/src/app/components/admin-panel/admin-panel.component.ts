@@ -1,8 +1,10 @@
+import { Room } from './../../classes/room';
+import { SeanceService } from './../../services/seance.service';
+import { RoomService } from './../../services/room.service';
+import { MovieService } from './../../services/movie.service';
 import { Seance } from './../../classes/seance';
 import { Movie } from './../../classes/movie';
 import { Component, OnInit } from '@angular/core';
-import { Room } from '../../classes/room';
-import { Seat } from 'src/app/classes/seat';
 
 @Component({
   selector: 'app-admin-panel',
@@ -13,10 +15,13 @@ export class AdminPanelComponent implements OnInit {
 
   datepickerPage = 0;
   todayDate = new Date(Date.now()).getTime();
-  daysToView: number[] = [0, 1, 2, 3, 4, 5, 6];
   hoursToView: String[] = ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00",];
   todaydate: number = new Date(new Date(Date.now()).setHours(10, 0, 0, 0)).getTime();
   daysToView2: Date[] = [new Date(this.todaydate), new Date(this.todaydate + (1000 * 60 * 60 * 24 * 1)), new Date(this.todaydate + (1000 * 60 * 60 * 24 * 2)), new Date(this.todaydate + (1000 * 60 * 60 * 24 * 3)), new Date(this.todaydate + (1000 * 60 * 60 * 24 * 4)), new Date(this.todaydate + (1000 * 60 * 60 * 24 * 5)), new Date(this.todaydate + (1000 * 60 * 60 * 24 * 6))];
+
+  seances: Seance[] = [];
+  rooms: Room[] = [];
+  movies: Movie[] = [];
 
 
   nextDates() {
@@ -38,46 +43,67 @@ export class AdminPanelComponent implements OnInit {
   //room
   newRoomColumns: Number;
   newRoomRows: Number;
-  rooms: Room[] = [
-    new Room(1, 10, 10),
-    new Room(2, 12, 10),
-    new Room(3, 13, 10),
-    new Room(4, 10, 8),
-  ];
-  newRoomNumber = this.rooms.length + 1;
+  newRoomNumber;
 
-  addRoom() {
-    this.rooms.push(new Room(this.newRoomNumber, this.newRoomRows, this.newRoomColumns));
-    this.newRoomNumber = this.newRoomNumber + 1;
+  addRoom(newRoomNumber, newRoomRows, newRoomColumns) {
+    this.roomService.addRoom(newRoomNumber, newRoomRows, newRoomColumns)
+      .subscribe((observer) => {
+        if (observer['success']) {
+          this.rooms.push(new Room(observer['roomId'], newRoomNumber, newRoomRows, newRoomColumns));
+        }
+      }, (err) => {
+        throw err;
+      });
   }
 
-  deleteRoom(room){
-    this.rooms.splice(this.rooms.indexOf(room),1);
+  deleteRoom(room: Room) {
+    this.roomService.deleteRoom(room).subscribe((observer) => {
+      if (observer['success']) {
+        this.rooms.splice(this.rooms.indexOf(room), 1);
+      }
+    }, (err) => {
+      throw err;
+    });
   }
-
-
   //movie
 
   newMovieTitle: String;
   newMovieProductionYear: Date;
   newMovieDirector: String;
-
-  movies: Movie[] = [
-    new Movie("Szklana Pulapka I", 1995, "Jan Kowalski"),
-    new Movie("Szklana Pulapka II", 1998, "Zbigniew Wodecki"),
-    new Movie("American Pie", 1992, "Steven Hawking"),
-    new Movie("XXX", 2005, "Muniek Staszczyk")
-  ];
-
-  addMovie() {
-    this.movies.push(new Movie(this.newMovieTitle, this.newMovieProductionYear, this.newMovieDirector));
+  addMovie(newMovieTitle, newMovieProductionYear, newMovieDirector) {
+    this.movieService.addMovie(newMovieTitle, newMovieProductionYear, newMovieDirector)
+      .subscribe((observer) => {
+        if (observer['success']) {
+          this.movies.push(new Movie(observer['movieId'], newMovieTitle, newMovieProductionYear, newMovieDirector));
+        }
+      }, (err) => {
+        throw err;
+      });
   }
 
-  deleteMovie(movie){
-
-    this.movies.splice(this.movies.indexOf(movie),1);
+  deleteMovie(movie) {
+    console.log(movie.id)
+    this.movieService.deleteMovie(movie.id)
+      .subscribe((observer) => {
+        if (observer['success']) {
+          
+          let foundSeances = {seances: this.seances.filter((seance) => {
+            return seance.movie.id == movie.id 
+          })};
+          console.log(foundSeances);
+          this.seanceService.deleteSeances(foundSeances.seances).subscribe((observer2) => {
+            if(observer2['success']){
+              for (const seance of foundSeances.seances) {
+                this.seances.splice(this.seances.indexOf(seance),1);
+              }
+            }
+          })
+          this.movies.splice(this.movies.indexOf(movie), 1);
+        }
+      }, (err) => {
+        throw err;
+      })
   }
-
   //seance
 
   newSeanceDates: Date[] = [];
@@ -103,27 +129,24 @@ export class AdminPanelComponent implements OnInit {
     }
   }
 
-  seances: Seance[] = [
-    new Seance([new Date(2018 - 10 - 12), new Date(2018 - 10 - 12), new Date(2018 - 10 - 13), new Date(2018 - 10 - 14)], this.movies[1], this.rooms[2], [new Seat(1, 1), new Seat(3, 1), new Seat(2, 1), new Seat(1, 2), new Seat(1, 3), new Seat(2, 4)])
-    , new Seance([new Date(2018 - 10 - 12), new Date(2018 - 10 - 12), new Date(2018 - 10 - 13), new Date(2018 - 10 - 14)], this.movies[1], this.rooms[2], [new Seat(1, 1), new Seat(3, 1), new Seat(2, 1), new Seat(1, 2), new Seat(1, 3), new Seat(2, 4)])
-    , new Seance([new Date(2018 - 10 - 12), new Date(2018 - 10 - 12), new Date(2018 - 10 - 13), new Date(2018 - 10 - 14)], this.movies[1], this.rooms[2], [new Seat(1, 1), new Seat(3, 1), new Seat(2, 1), new Seat(1, 2), new Seat(1, 3), new Seat(2, 4)])
-  ];
-  addSeance() {
-    if (this.newSeanceRoom && this.newSeanceMovie && this.newSeanceDates) {
-      let newSeanceSeats: Seat[] = [];
-      let rows = this.newSeanceRoom.rows;
-      let columns = this.newSeanceRoom.columns;
-      for (let i = 1; i <= rows; i++) {
-        for (let j = 1; j <= columns; j++) {
-          newSeanceSeats.push(new Seat(i, j));
-        }
-      } console.log(new Seance(this.newSeanceDates, this.newSeanceMovie, this.newSeanceRoom, newSeanceSeats));
-      this.seances.push(new Seance(this.newSeanceDates, this.newSeanceMovie, this.newSeanceRoom, newSeanceSeats));
-      this.newSeanceDates = [];
-      this.newSeanceMovie = undefined;
-      this.newSeanceRoom = undefined;
-      newSeanceSeats = [];
-    }
+  addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates) {
+    this.seanceService.addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates).subscribe((observer: any) => {
+      // console.log(observer);
+      let movie: Movie, room: Room;
+      movie = this.movies.find((movie) => {
+        return movie.id == observer.seance.movie;
+      })
+      room = this.rooms.find((room) => {
+        return room.id == observer.seance.room;
+      })
+      // console.log(movie, room);
+      if(observer['success']){
+        this.seances.push(new Seance(observer.seance.id,observer.seance.dates,movie,room,observer.seance.seats))
+        this.newSeanceDates.length = 0;
+      }
+    })
+    // this.newSeanceMovie = this.movies[0];
+    // this.newSeanceRoom = this.rooms[0];
   }
 
   addDateTimeToSeance(day, hour) {
@@ -144,9 +167,46 @@ export class AdminPanelComponent implements OnInit {
     });
     this.newSeanceDates.splice(check.indexOf(dateTime), 1);
   }
-  constructor() { }
+
+
+
+
+  constructor(private movieService: MovieService, private roomService: RoomService, private seanceService: SeanceService) { }
 
   ngOnInit() {
 
+    this.roomService.getRooms()
+      .subscribe((roomsJSON: any) => {
+        for (let room of roomsJSON.rooms) {
+          this.rooms.push(new Room(room._id, room.number, room.rows, room.columns));
+        }
+      });
+    this.movieService.getMovies()
+      .subscribe((res: any) => {
+        for (let movie of res.movies) {
+          this.movies.push(new Movie(movie._id, movie.title, movie.productionYear, movie.director));
+        }
+      })
+
+    this.seanceService.getSeances()
+      .subscribe((observer: any) => {
+        let realMovie;
+        let realRoom;
+        for (const seance of observer.seances) {
+          realMovie = this.movies.find((movie) => {
+            return movie.id === seance.movie
+          })
+          // console.log(`id seansu: ${seance._id}`)
+          
+          realRoom = this.rooms.find((room) => {
+            return room.id === seance.room
+          })
+          if (realRoom && realMovie) {
+            this.seances.push(new Seance(seance._id,seance.dates, realMovie, realRoom, seance.seats));
+            }else{
+              console.log("movie/room not found");          
+            }
+        }
+      });
   }
 }

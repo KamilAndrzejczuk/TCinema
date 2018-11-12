@@ -20,13 +20,32 @@ router.post('/add', (req, res) => {
         } else {
             res.json({
                 success: true,
-                msg: "New Movie added to the database"
+                msg: "New Movie added to the database",
+                movieId: movie._id,
             });
         }
     })
 });
 
-router.post('/remove', (req, res) => {
+router.get('/all', (req, res) => {
+    Movie.find({}, (err, movies) => {
+        if (err || !movies) {
+            res.json({
+                message: "An error occured while fetching movies, try again",
+                success: false
+            })
+        }
+        else {
+            res.json({
+                message: "data fetched",
+                success: true,
+                movies: movies
+            });
+        }
+    })
+});
+
+router.delete('/remove', (req, res) => {
     Movie.removeMovie(req.body.id, (err, removed) => {
         if (err) {
             res.json({

@@ -2,19 +2,23 @@ const mongoose = require('mongoose');
 const config = require('../config/database');
 
 const SeatSchema = mongoose.Schema({
-    number: {
+    row: {
+        type: Number,
+        required: true
+    }, 
+    column: {
         type: Number,
         required: true
     },
-    isReserved:{
+    isReserved: {
         type: Boolean,
-        defauld: false
+        default: false
     },
 });
 
-const Seat = module.exports = mongoose.model("Seat",SeatSchema);
+const Seat = module.exports = mongoose.model("Seat", SeatSchema);
 
-module.exports.reserveSeat = function(num, callback){
-    Seat.findOneAndUpdate({number: num},{isReserved: true},callback);
+module.exports.reserveSeat = function (r,c, callback) {
+    Seat.findOneAndUpdate({ row: r, column: c}, { isReserved: true }, callback);
 };
 

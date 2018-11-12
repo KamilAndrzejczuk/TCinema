@@ -9,9 +9,9 @@
   <form action=""></form>
 
   <table class="table table-striped">
-    <thead  style="text-align: center;">
+    <thead style="text-align: center;">
       <tr>
-        <th style="width: 20%" >Title</th>
+        <th style="width: 20%">Title</th>
         <th style="width: 20%">Production Year</th>
         <th style="width: 20%">Director</th>
         <th style="width: 30%"></th>
@@ -21,7 +21,7 @@
     <tbody style="text-align: center;">
       <tr *ngFor="let movie of movies">
         <th scope="row">{{movie.title}}</th>
-        <td>{{movie.productionYear}}</td>
+        <td>{{movie.productionYear | date: 'yyyy'}}</td>
         <td>{{movie.director}}</td>
         <td></td>
         <td style="text-align: right;"><button (click)="deleteMovie(movie)" class="btn btn-danger">Delete</button></td>
@@ -46,14 +46,15 @@
       <label for="rows">Director</label>
       <input type="text" class="form-control" name="rows" [(ngModel)]="newMovieDirector" placeholder="Enter director's first and last name">
     </div>
-    <button class="btn btn-primary inline" (click)="addMovie()">Add Movie</button>
+    <button class="btn btn-primary inline" (click)="addMovie(newMovieTitle, newMovieProductionYear, newMovieDirector)">Add
+      Movie</button>
   </form>
 </div>
 <hr>
 <div class="container">
 
   <table class="table table-striped">
-    <thead style="text-align: center;" >
+    <thead style="text-align: center;">
       <tr>
         <th style="width: 10%">Number</th>
         <th style="width: 10%">Columns</th>
@@ -79,6 +80,10 @@
   <form>
 
     <div class="form-group">
+      <label for="columns">Room number</label>
+      <input type="text" class="form-control" [(ngModel)]="newRoomNumber" name="cols" placeholder="Enter room number">
+    </div>
+    <div class="form-group">
       <label for="columns">Number of columns</label>
       <input type="text" class="form-control" [(ngModel)]="newRoomColumns" name="cols" placeholder="Enter number of columns">
     </div>
@@ -86,7 +91,7 @@
       <label for="rows">Number of rows</label>
       <input type="text" class="form-control" [(ngModel)]="newRoomRows" name="rows" placeholder="Enter number of Rows">
     </div>
-    <button class="btn btn-primary inline " (click)="addRoom()">Add Room</button>
+    <button class="btn btn-primary inline " (click)="addRoom(newRoomNumber ,newRoomColumns, newRoomRows)">Add Room</button>
   </form>
 </div>
 <hr>
@@ -104,12 +109,13 @@
       <tr *ngFor="let seance of seances">
         <td>{{seance.movie.title}}</td>
         <td>{{seance.room.number}}</td>
-        <td style="align: center;" >  <span style="font-size: 16px; margin-top:5px; margin-right: 5px;" *ngFor="let date of seance.dates" class="badge badge-info">{{date
+        <td style="align: center;"> <span style="font-size: 16px; margin-top:5px; margin-right: 5px;" *ngFor="let date of seance.dates"
+            class="badge badge-info">{{date
             | date: 'yyyy/MM/dd HH:mm'}}</span></td>
       </tr>
     </tbody>
   </table>
- 
+
   <br>
   <hr>
   <br>
@@ -157,7 +163,7 @@
       Page</button>
 
     <br><br><br>
-    <button class="btn btn-primary btn-block inline float-right" (click)="addSeance()">Add Seance</button>
+    <button class="btn btn-primary btn-block inline float-right" (click)="addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates)">Add Seance</button>
   </form>
 
   <div style="height: 300px;">

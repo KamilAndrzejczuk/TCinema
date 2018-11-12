@@ -30,3 +30,6 @@ module.exports.addRoom = function(newRoom, callback){
 module.exports.removeRoom = function(roomID, callback){
     Room.findByIdAndDelete(roomID, callback);
 };
+module.exports.getRooms = function(callback){
+    Room.find({},callback);
+}

@@ -22,6 +22,6 @@ module.exports.addMovie = function(newMovie, callback){
     newMovie.save(callback);
 };
 
-module.exports.removeMovie = function(movieID, callback){
-    Movie.findByIdAndRemove(movieID, callback);
+module.exports.removeMovie = function(movieId, callback){
+    Movie.findByIdAndDelete(movieId, callback);
 };

@@ -6,6 +6,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { HomeComponent } from './components/home/home.component';
+// import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes = [
   { path: '', component: HomeComponent },
@@ -17,12 +19,13 @@ const appRoutes = [
   declarations: [
     AppComponent,
     AdminPanelComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
