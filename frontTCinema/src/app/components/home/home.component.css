@@ -1,0 +1,39 @@
+.center {
+    justify-content: center;
+    padding: 50px 0 50px 0;
+
+} 
+.reservationList {
+    margin-top: 200px;
+}
+.margin-right {
+    margin-right: 5px;
+}
+.seatsInfo{
+
+}
+
+.seatButton {
+    margin: 0 1% 5px 0;
+    overflow: hidden;
+}
+.screen {
+    width: 100%;
+    height: 80px;
+    background-color: darkcyan;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 80px;
+    margin-bottom: 30px;
+}
+
+.seatButtonReserved {
+    background-color: red;
+}
+.seatButtonChosen {
+    background-color: rgba(100, 100, 200, 0.7);
+}
+.seatButtonNormal{
+    background-color: rgba(200, 200, 200, 0.7);
+
+}

@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class MovieService {
   constructor(private http: HttpClient) { }
 
-  baseURL = `http://localhost:3000/movie`;
+  baseURL = `http://localhost:8080/movie`;
 
   newMovieTitle: String;
   newMovieProductionYear: Date;

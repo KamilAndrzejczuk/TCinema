@@ -8,11 +8,13 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { HomeComponent } from './components/home/home.component';
 // import { HttpClientModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const appRoutes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminPanelComponent },
-  { path: '**', component: HomeComponent }
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({
@@ -20,6 +22,8 @@ const appRoutes = [
     AppComponent,
     AdminPanelComponent,
     HomeComponent,
+    NavbarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

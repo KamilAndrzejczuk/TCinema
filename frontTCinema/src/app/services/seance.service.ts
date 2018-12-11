@@ -12,7 +12,7 @@ import { MovieService } from './movie.service';
 })
 export class SeanceService implements OnInit {
 
-  baseURL: String = `http://localhost:3000/seance`
+  baseURL: String = `http://localhost:8080/seance`
 
   movies: Movie[];
   rooms: Room[];
@@ -38,7 +38,6 @@ export class SeanceService implements OnInit {
 
 
   addSeance(newSeanceRoom: String, newSeanceMovie: String, newSeanceDates: Date[]) {
-
     return this.http.post(`${this.baseURL}/add`, {
       room: newSeanceRoom,
       movie: newSeanceMovie,

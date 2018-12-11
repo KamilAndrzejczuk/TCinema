@@ -23,11 +23,13 @@ router.post('/remove', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-
+    
     let newSeats = [];
-    for (let i = 1; i <= req.body.room.rows; i++) {
-        for (let j = 1; j <= req.body.room.columns; j++) {
-            newSeats.push(new Seat({ row: i, column: j }));
+    for (let d = 0; d <= req.body.dates.length; d++) {
+        for (let i = 1; i <= req.body.room.rows; i++) {
+            for (let j = 1; j <= req.body.room.columns; j++) {
+                newSeats.push(new Seat({date: req.body.dates[d], row: i, column: j }));
+            }
         }
     }
     const newSeance = new Seance({
@@ -68,6 +70,24 @@ router.delete('/remove', (req, res) => {
         };
     });
 });
+
+router.put('/update', (req, res) => {
+    let query = { 'seances._id': req.body.seanceId}
+    Seance.findOneAndUpdate(query, { $set:{"seances.&.seats._id": req.body.seatId} },(err,doc,ress) => {
+        if(err){
+            res.json({
+                message: "error: " + err,
+                success: false,
+            })
+        }else{ 
+            res.json({
+                success: true,
+                message: doc, ress
+            });
+        }
+    })
+});
+
 router.get('/all', (req, res) => {
     Seance.find({}, (err, seances) => {
         if (err) {

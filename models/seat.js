@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const config = require('../config/database');
 
 const SeatSchema = mongoose.Schema({
+    date: {
+        type: Date,
+        required: true
+    },
     row: {
         type: Number,
         required: true

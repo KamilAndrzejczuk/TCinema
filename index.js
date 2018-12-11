@@ -22,7 +22,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(cors());
 
@@ -36,7 +36,6 @@ app.get('/',(req, res) => {
 res.send("Pusto");
 })
 
-// dzieki temu moge brac templatki w formacie .json
 app.use(bodyParser.json());
 
 app.use(passport.initialize());
@@ -49,11 +48,9 @@ app.use('/users', usersRoute);
 app.use('/movie', movieRoute);
 app.use('/seats', seatsRoute);
 app.use('/room', roomsRoute);
-// dzieki temu moge uzywac post get itp na jednym adresie!
 
 var originsWhitelist = [
     'http://localhost:4200',      //this is my front-end url for development
-     'http://www.myproductionurl.com'
   ];
   var corsOptions = {
     origin: function(origin, callback){
