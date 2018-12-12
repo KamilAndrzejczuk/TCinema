@@ -27,11 +27,18 @@
     margin-bottom: 30px;
 }
 
+.successReservation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    
+}
 .seatButtonReserved {
     background-color: red;
 }
 .seatButtonChosen {
-    background-color: rgba(100, 100, 200, 0.7);
+    background-color: rgba(26, 26, 236, 0.7);
 }
 .seatButtonNormal{
     background-color: rgba(200, 200, 200, 0.7);

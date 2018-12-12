@@ -22,7 +22,12 @@ const SeatSchema = mongoose.Schema({
 
 const Seat = module.exports = mongoose.model("Seat", SeatSchema);
 
-module.exports.reserveSeat = function (r,c, callback) {
-    Seat.findOneAndUpdate({ row: r, column: c}, { isReserved: true }, callback);
+module.exports.reserveSeat = function ({seats, personInfo}, callback) {
+    Seat.updateMany({_id: {$in: seats}},{isReserved: true, personInfo: personInfo}, callback);
 };
+
+module.exports.addMany = function (seatsArr, callback) {
+    Seat.insertMany(seatsArr, callback);
+}
+
 

@@ -131,7 +131,7 @@ export class AdminPanelComponent implements OnInit {
 
   addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates) {
     this.seanceService.addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates).subscribe((observer: any) => {
-      // console.log(observer);
+      console.log(observer);
       let movie: Movie, room: Room;
       movie = this.movies.find((movie) => {
         return movie.id == observer.seance.movie;

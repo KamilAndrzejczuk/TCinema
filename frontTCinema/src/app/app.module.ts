@@ -1,3 +1,4 @@
+import { SuccessComponent } from './components/success/success.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -15,12 +16,15 @@ const appRoutes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminPanelComponent },
   { path: '**', component: HomeComponent },
+  { path: 'success', component: SuccessComponent },
+
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminPanelComponent,
+    SuccessComponent,
     HomeComponent,
     NavbarComponent,
     FooterComponent,

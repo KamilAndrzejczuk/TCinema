@@ -23,12 +23,14 @@ router.post('/remove', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-    
+
     let newSeats = [];
-    for (let d = 0; d <= req.body.dates.length; d++) {
+    console.log(req.body);
+    
+    for (let d = 0; d < req.body.dates.length; d++) {
         for (let i = 1; i <= req.body.room.rows; i++) {
             for (let j = 1; j <= req.body.room.columns; j++) {
-                newSeats.push(new Seat({date: req.body.dates[d], row: i, column: j }));
+                newSeats.push(new Seat({ date: req.body.dates[d], row: i, column: j }));
             }
         }
     }
@@ -45,11 +47,21 @@ router.post('/add', (req, res) => {
                 message: "An error occured while adding new seance: " + err,
             });
         } else {
-            res.json({
-                success: true,
-                message: "Added new seance",
-                seance: seance
-            });
+            Seat.addMany(newSeats, (e, seats) => {
+                if (e) {
+                    res.json({
+                        success: false,
+                        message: "An error occured while adding seats: " + e,
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        message: "Added new seance",
+                        seance: seance,
+                        seats: seats
+                    });
+                }
+            })
         }
     });
 
@@ -72,14 +84,14 @@ router.delete('/remove', (req, res) => {
 });
 
 router.put('/update', (req, res) => {
-    let query = { 'seances._id': req.body.seanceId}
-    Seance.findOneAndUpdate(query, { $set:{"seances.&.seats._id": req.body.seatId} },(err,doc,ress) => {
-        if(err){
+    let query = { 'seances._id': req.body.seanceId }
+    Seance.findOneAndUpdate(query, { $set: { "seances.&.seats._id": req.body.seatId } }, (err, doc, ress) => {
+        if (err) {
             res.json({
                 message: "error: " + err,
                 success: false,
             })
-        }else{ 
+        } else {
             res.json({
                 success: true,
                 message: doc, ress

@@ -11,10 +11,10 @@ const SeanceSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'Movie',
         required: true
     },
-    seats: {
-        type: Array,
+    seats: [{
+        type: mongoose.Schema.Types.Mixed, ref: 'Seat',
         required: true,
-    },
+    }],
     room: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Room',
         required: true,

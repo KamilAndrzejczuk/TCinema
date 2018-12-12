@@ -1,5 +1,7 @@
+import { DBConnectionService } from './../../services/dbconnection.service';
 import { SeanceService } from './../../services/seance.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,51 +19,67 @@ export class HomeComponent implements OnInit {
   chosenSeanceSeats;
   reservationSeatsList = [];
   inputPersonInformation = {};
+  reservationSuccess = false;
 
-  lognijmicos() {
-    console.log(this.inputPersonInformation)
+
+  submitReservation() {
+    let seats = this.reservationSeatsList.map(seat => seat._id);
+    this.dbservice.reserveSeat(seats, this.inputPersonInformation).subscribe(observer => {
+      this.chosenSeanceSeats.map(seat => {
+        if (seats.includes(seat._id)) {
+          seat.isReserved = true;
+          seat.isPreReserved = false;
+        }
+
+      })
+
+      this.reservationSuccess = true;
+    });
+
   }
 
   setChosenDate(newDate) {
     this.chosenDate = newDate;
   }
-  constructor(private seanceService: SeanceService) { }
+  constructor(private router: Router, private seanceService: SeanceService, private dbservice: DBConnectionService) { }
 
 
   addSeatToReservationList(newSeat) {
     if (this.reservationSeatsList.filter(function (seat) {
       return seat._id === newSeat._id
     }).length && !newSeat.isReserved) {
-      this.filteredSeances.map(seance => {
-        seance.seats.map(seat => {
+      this.chosenSeanceSeats.map(seat => {
           if (seat._id === newSeat._id) {
             seat.isPreReserved = false;
+            console.log(seat._id);
 
           }
-        })
+        
       })
       this.reservationSeatsList.splice(
         this.reservationSeatsList.findIndex(function (seat) {
           return seat._id === newSeat._id
         }), 1);
     }
-    else {
+    else if (!newSeat.isReserved) {
       this.reservationSeatsList.push(newSeat);
-      this.filteredSeances.map(seance => {
-        seance.seats.map(seat => {
+      this.chosenSeanceSeats.map(seat => {
           if (seat._id === newSeat._id) {
             seat.isPreReserved = true;
-            console.log(seat, newSeat);
-
           }
         })
-      })
+      
     }
   }
   seanceSeatsInfo(seance, date) {
     this.chosenSeance = { seance, date };
-    this.chosenSeanceSeats = seance.seats.filter(function (seat) {
-      return seat.date === seance.date;
+    this.dbservice.getSeatsForSeance(seance.seats.reduce((acc, next) => {
+      acc.push(next._id);
+      return acc;
+    }, [])).subscribe(observer => {
+      this.chosenSeanceSeats = observer['seats'].filter(function (seat) {
+        return seat.date === date;
+      })
     })
   }
 
