@@ -1,5 +1,5 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-success',
@@ -8,9 +8,13 @@ import { EventEmitter } from '@angular/core';
 })
 export class SuccessComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  goHome(){
+    this.router.navigateByUrl('/ada')
   }
 
 }

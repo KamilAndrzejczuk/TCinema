@@ -11,6 +11,8 @@ import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { SeanceSeatsInfoComponent } from './components/seance-seats-info/seance-seats-info.component';
+import { ReservationPersonInfoComponent } from './components/reservation-person-info/reservation-person-info.component';
 
 const appRoutes = [
   { path: '', component: HomeComponent },
@@ -28,6 +30,8 @@ const appRoutes = [
     HomeComponent,
     NavbarComponent,
     FooterComponent,
+    SeanceSeatsInfoComponent,
+    ReservationPersonInfoComponent,
   ],
   imports: [
     BrowserModule,

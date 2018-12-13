@@ -3,44 +3,15 @@
     padding: 50px 0 50px 0;
 
 } 
-.reservationList {
-    margin-top: 200px;
-}
 .margin-right {
     margin-right: 5px;
 }
-.seatsInfo{
 
-}
-
-.seatButton {
-    margin: 0 1% 5px 0;
-    overflow: hidden;
-}
-.screen {
-    width: 100%;
-    height: 80px;
-    background-color: darkcyan;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 80px;
-    margin-bottom: 30px;
-}
-
-.successReservation{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+.containerFull {
+    width: 100vw;
+    height: 100%;
     
 }
-.seatButtonReserved {
-    background-color: red;
-}
-.seatButtonChosen {
-    background-color: rgba(26, 26, 236, 0.7);
-}
-.seatButtonNormal{
-    background-color: rgba(200, 200, 200, 0.7);
-
+.container {
+    padding-top: 100px;
 }

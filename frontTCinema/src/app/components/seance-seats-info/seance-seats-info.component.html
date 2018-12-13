@@ -1,0 +1,26 @@
+<div *ngIf="!showReservationPersonInfo;else personalInfo">
+
+  <div class="screen">
+    <p style="font-size: 50px;">SCREEN</p>
+  </div>
+  <div class="container">
+
+    <button class=" btn seatButton " [ngClass]="{
+      'seatButtonReserved': seat.isReserved,
+      'seatButtonChosen': !seat.isReserved && seat.isPreReserved,
+      'seatButtonNormal': !seat.isReserved && !seat.isPreReserved
+    }"
+      [ngStyle]="{'width': seatButtonWidth()}" (click)="addSeatToReservationList(seat)" *ngFor="let seat of chosenSeanceSeats">
+      {{seat.column}}
+    </button>
+
+  </div>
+  <div class="" *ngIf="reservationSeatsList.length">
+    <button class="btn btn-success btn-block" (click)="showReservationPersonInfo = true">Next Step</button>
+  </div>
+</div>
+<ng-template #personalInfo>
+  <app-reservation-person-info
+  [reservationSeatsList] = "reservationSeatsList"
+  [chosenSeanceSeats] = "chosenSeanceSeats"></app-reservation-person-info>
+</ng-template>

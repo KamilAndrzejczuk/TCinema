@@ -1,71 +1,34 @@
-<div class="container">
-  <div *ngIf="!reservationSuccess; else success">
-
-    <div class="row center">
-      <div class="" *ngFor="let date of datesList">
-        <button class="btn btn-primary margin-right" (click)="filterSeancesByDate(date)">{{date | date: 'dd MMM'}}</button>
+<div class="containerFull">
+  <div class="container">
+    <div *ngIf="!showSeats; else seatsInfo ">
+      
+      <div style= "align-items: center" class="row center">
+        <h2 style="margin-right: 20px;" > <strong>Repertoire </strong></h2>
+        <p style="margin-right: 100px;">{{chosenDate | date: 'EEEE dd.LL'}} </p>
+        <div class="" *ngFor="let date of datesList">
+          <button class="btn btn-primary margin-right" (click)="filterSeancesByDate(date)">{{date | date: 'dd MMM'}}</button>
+        </div>
       </div>
-    </div>
-    <table *ngIf="seances" class="table table-striped table-dark">
-      <thead>
-        <tr>
-          <th style="width: 30%;" scope="col">Title</th>
-          <th style="width: 70%;" scope="col">Hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let seance of filteredSeances">
-          <th scope="row">{{seance.movie}}</th>
-          <td><button style="margin-right:5px;" (click)="seanceSeatsInfo(seance, dateOfSeance)" *ngFor="let dateOfSeance of seance.dates"
+      <table *ngIf="seances" class="table table-striped table-dark">
+        <thead>
+          <tr>
+            <th style="width: 30%;" scope="col">Title</th>
+            <th style="width: 70%;" scope="col">Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let seance of filteredSeances">
+            <th scope="row">{{seance.movieTitle}}</th>
+            <td><button style="margin-right:5px;" (click)="seanceSeatsInfo(seance, dateOfSeance)" *ngFor="let dateOfSeance of seance.dates"
               class="btn btn-primary">{{dateOfSeance | date: 'HH:mm'}}</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="seatsInfo" *ngIf="chosenSeance">
-      <div class="screen">
-        <p style="font-size: 50px;">SCREEN</p>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="container">
-
-        <button class=" btn seatButton " [ngClass]="{
-        'seatButtonReserved': seat.isReserved,
-        'seatButtonChosen': !seat.isReserved && seat.isPreReserved,
-        'seatButtonNormal': !seat.isReserved && !seat.isPreReserved
-        }"
-          [ngStyle]="{'width': seatButtonWidth()}" (click)="addSeatToReservationList(seat)" *ngFor="let seat of chosenSeanceSeats">
-          {{seat.column}}
-        </button>
-      </div>
-      <div class="reservationList" *ngIf="reservationSeatsList.length">
-        <form>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputFirstName">First Name</label>
-              <input [(ngModel)]="inputPersonInformation.firstName" name="firstname" type="text" class="form-control"
-                id="inputFirstName" placeholder="First Name">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="inputLastName">Last Name</label>
-              <input [(ngModel)]="inputPersonInformation.lastName" name="lastname" type="text" class="form-control" id="inputLastName"
-                placeholder="Last Name">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPhoneNumber">Phone Number</label>
-            <input [(ngModel)]="inputPersonInformation.phoneNumber" name="phonenumber" type="text" class="form-control"
-              id="inputPhoneNumber" placeholder="732 239 505">
-          </div>
-          <div class="form-group">
-            <label for="inputEmailAddress">Email Address</label>
-            <input [(ngModel)]="inputPersonInformation.email" name="email" type="email" class="form-control" id="inputEmailAddress"
-              placeholder="johncena357@gmail.com">
-          </div>
-          <button (click)="submitReservation()" type="submit" class="btn btn-primary">Submit Reservation</button>
-        </form>
-      </div>
+      <ng-template #seatsInfo>
+        <button class="btn btn-secondary pull-left" style="margin-bottom:50px" (click)="reset()">Back to Repertoire</button>
+        <app-seance-seats-info *ngIf="chosenSeance" [chosenSeanceSeats]="chosenSeanceSeats">
+        </app-seance-seats-info>
+      </ng-template>
     </div>
   </div>
-  <ng-template #success>
-    <app-success ></app-success>
-  </ng-template>
-</div>

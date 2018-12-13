@@ -1,3 +1,4 @@
+import { DBConnectionService } from './../../services/dbconnection.service';
 import { Room } from './../../classes/room';
 import { SeanceService } from './../../services/seance.service';
 import { RoomService } from './../../services/room.service';
@@ -46,7 +47,7 @@ export class AdminPanelComponent implements OnInit {
   newRoomNumber;
 
   addRoom(newRoomNumber, newRoomRows, newRoomColumns) {
-    this.roomService.addRoom(newRoomNumber, newRoomRows, newRoomColumns)
+    this.dbservice.addRoom(newRoomNumber, newRoomRows, newRoomColumns)
       .subscribe((observer) => {
         if (observer['success']) {
           this.rooms.push(new Room(observer['roomId'], newRoomNumber, newRoomRows, newRoomColumns));
@@ -57,7 +58,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   deleteRoom(room: Room) {
-    this.roomService.deleteRoom(room).subscribe((observer) => {
+    this.dbservice.deleteRoom(room).subscribe((observer) => {
       if (observer['success']) {
         this.rooms.splice(this.rooms.indexOf(room), 1);
       }
@@ -71,7 +72,7 @@ export class AdminPanelComponent implements OnInit {
   newMovieProductionYear: Date;
   newMovieDirector: String;
   addMovie(newMovieTitle, newMovieProductionYear, newMovieDirector) {
-    this.movieService.addMovie(newMovieTitle, newMovieProductionYear, newMovieDirector)
+    this.dbservice.addMovie(newMovieTitle, newMovieProductionYear, newMovieDirector)
       .subscribe((observer) => {
         if (observer['success']) {
           this.movies.push(new Movie(observer['movieId'], newMovieTitle, newMovieProductionYear, newMovieDirector));
@@ -83,7 +84,7 @@ export class AdminPanelComponent implements OnInit {
 
   deleteMovie(movie) {
     console.log(movie.id)
-    this.movieService.deleteMovie(movie.id)
+    this.dbservice.deleteMovie(movie.id)
       .subscribe((observer) => {
         if (observer['success']) {
           
@@ -91,7 +92,7 @@ export class AdminPanelComponent implements OnInit {
             return seance.movie.id == movie.id 
           })};
           console.log(foundSeances);
-          this.seanceService.deleteSeances(foundSeances.seances).subscribe((observer2) => {
+          this.dbservice.deleteSeances(foundSeances.seances).subscribe((observer2) => {
             if(observer2['success']){
               for (const seance of foundSeances.seances) {
                 this.seances.splice(this.seances.indexOf(seance),1);
@@ -130,7 +131,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates) {
-    this.seanceService.addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates).subscribe((observer: any) => {
+    this.dbservice.addSeance(newSeanceRoom, newSeanceMovie, newSeanceDates).subscribe((observer: any) => {
       console.log(observer);
       let movie: Movie, room: Room;
       movie = this.movies.find((movie) => {
@@ -171,24 +172,24 @@ export class AdminPanelComponent implements OnInit {
 
 
 
-  constructor(private movieService: MovieService, private roomService: RoomService, private seanceService: SeanceService) { }
+  constructor(private dbservice: DBConnectionService) { }
 
   ngOnInit() {
 
-    this.roomService.getRooms()
+    this.dbservice.getRooms()
       .subscribe((roomsJSON: any) => {
         for (let room of roomsJSON.rooms) {
           this.rooms.push(new Room(room._id, room.number, room.rows, room.columns));
         }
       });
-    this.movieService.getMovies()
+      this.dbservice.getMovies()
       .subscribe((res: any) => {
         for (let movie of res.movies) {
           this.movies.push(new Movie(movie._id, movie.title, movie.productionYear, movie.director));
         }
       })
 
-    this.seanceService.getSeances()
+    this.dbservice.getSeances()
       .subscribe((observer: any) => {
         let realMovie;
         let realRoom;
