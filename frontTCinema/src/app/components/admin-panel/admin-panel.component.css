@@ -1,3 +1,9 @@
+html {
+    background-color: rgba(86, 235, 255, 0.371) !important;
+}
+body {
+    background-color: rgba(86, 235, 255, 0.371) !important;
+}
 .removeButton:hover {
     background-color: red !important;
 }
@@ -30,9 +36,9 @@
 .tablediv {
     padding-top: 1px;
 }
-
 .container {
     margin-top: 40px;
+    background-color: rgba(49, 49, 49, 0.6);
 }
 .btn-def {
     margin-bottom: 25px;
