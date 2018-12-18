@@ -18,7 +18,7 @@ npm install
 ```
 ## Running app
 First, move to cloned repository directory. There are three steps to run the application, first you have to run mongodb instance by running ```mongod``` into your console and let it run in the background,
-open new terminal tab and run ```nodemon``` into the main directory of the repository, then change directory to '/frontTCinema' and run ```ng serve```. That's it! You 're ready to go.
+open new terminal tab and run ```nodemon``` into the main directory of the repository, then change directory to '/frontTCinema' and run ```ng serve```. That's it! You're ready to go.
 
 ## Routes
 
@@ -57,9 +57,9 @@ Reservation route shows simple input form where cinema employee have to enter pe
 
 ## Status
 
-Project is about half way to be done, there are a lot of things to do like:
+Project is about 50% done, there are things to do like:
 - styling
 - forms validation
 - more admin panel functionalities
-- adding carousel with actual repertoire movies showing more details about it
+- adding carousel/slider with actual repertoire movies showing more details about it
 
