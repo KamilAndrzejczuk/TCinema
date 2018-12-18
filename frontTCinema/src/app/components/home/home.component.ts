@@ -20,6 +20,34 @@ export class HomeComponent implements OnInit {
   showSeats = false;
   movies: Movie[] = [];
 
+scrollToSeance() {
+  let element = document.getElementById('seances')
+  this.scrollTo(element);
+}
+
+scrollTo(element) {
+  window.scroll({
+    behavior: 'smooth',
+    left: 0,
+    top: element.offsetTop
+  });
+}
+
+// document.getElementById("button").addEventListener('click', () => {
+//   scrollTo(document.getElementById("8"));
+// });
+
+//   scrollTo(element, to, duration) {
+//     if (duration <= 0) return;
+//     var difference = to - element.scrollTop;
+//     var perTick = difference / duration * 10;
+
+//     setTimeout(function() {
+//         element.scrollTop = element.scrollTop + perTick;
+//         if (element.scrollTop === to) return;
+//         this.scrollTo(element, to, duration - 10);
+//     }, 10);
+// }
 
   setChosenDate(newDate) {
     this.chosenDate = newDate;
@@ -68,15 +96,15 @@ export class HomeComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.dbservice.getMovies().subscribe(observer => {
+      this.movies = observer['movies']
+    })
     this.dbservice.getSeances().subscribe(data => {
       this.seances = data['seances'];
 
       this.filterSeancesByDate(this.chosenDate);
     });
 
-    this.dbservice.getMovies().subscribe(observer => {
-      this.movies = observer['movies']
-    })
   }
 
 }

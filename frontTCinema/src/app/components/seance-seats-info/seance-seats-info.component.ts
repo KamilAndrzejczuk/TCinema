@@ -1,5 +1,6 @@
 import { DBConnectionService } from './../../services/dbconnection.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-seance-seats-info',
@@ -9,24 +10,38 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SeanceSeatsInfoComponent implements OnInit {
 
   @Input() chosenSeanceSeats;
+  @Input() seance;
 
   reservationSeatsList = [];
   reservationSuccess = false;
-  showReservationPersonInfo = false;  
+  showReservationPersonInfo = false;
+  chosenSeanceSeatsForHTML = [];
+  rowLength = 0;
+  colLength = 0;
 
-  constructor(private dbservice: DBConnectionService) { }
+  constructor(private dbservice: DBConnectionService) {
+
+  }
 
   ngOnInit() {
   }
+  ngOnChanges(change) {
+    
+    if (change.chosenSeanceSeats.currentValue) {
+      let len = change.chosenSeanceSeats.currentValue.length;
+      this.rowLength = change.chosenSeanceSeats.currentValue[len - 1].row;
+      this.colLength = change.chosenSeanceSeats.currentValue[len - 1].column;
+      
+      for(let i = 1 ; i <= this.rowLength; i++){
+        this.chosenSeanceSeatsForHTML.push(change.chosenSeanceSeats.currentValue.slice((i - 1) * this.colLength, i * this.colLength))
+      }
+    }
+  }
+
+
 
   seatButtonWidth() {
-    let rowLength = 0;
-    this.chosenSeanceSeats.map((seat) => {
-      if (rowLength < seat.column) {
-        rowLength = seat.column;
-      }
-    });
-    return `${100 / rowLength - 1}%`
+    return `${this.rowLength * 44 + 9 * (this.rowLength - 2)}`
   }
 
   addSeatToReservationList(newSeat) {
@@ -55,5 +70,5 @@ export class SeanceSeatsInfoComponent implements OnInit {
 
     }
   }
- 
+
 }

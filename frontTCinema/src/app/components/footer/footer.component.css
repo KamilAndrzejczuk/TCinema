@@ -1,5 +1,4 @@
 footer {
-    position: absolute;
     left: 0;
     bottom: 0;
     height: 100px;
@@ -9,7 +8,7 @@ footer {
 
 #myFooter {
     background-color: #3c3d41;
-    color: white;
+    color: rgb(134, 134, 134);
     padding-top: 30px;
 }
 
@@ -31,7 +30,7 @@ footer {
 
 #myFooter .footer-copyright p {
     margin: 10px;
-    color: #ccc;
+    color: rgb(124, 124, 124);
 }
 
 #myFooter ul {

@@ -3,28 +3,46 @@ const express = require('express');
 const router = express.Router();
 const Seat = require('../models/seat');
 const mongoose = require('mongoose');
-
+const Reservation = require('../models/reservation');
 router.post('/reserve', (req, res) => {
-    
-    console.log(req.body);
-    Seat.reserveSeat({seats: req.body.seats, personInfo: req.body.personInfo}, (err, done) => {
+
+    Seat.reserveSeat({ seats: req.body.seats }, (err, done) => {
         if (err) {
             res.json({
-                msg: "Failed to reserve seats",
+                msg: "Failed to reserve seats " + err,
                 success: false,
             });
         } else {
-            res.json({
-                msg: "Reservation has done: " + done,
-                success: true,
-            });
+            let reservation = new Reservation({
+                firstName: req.body.personInfo.firstName,
+                lastName: req.body.personInfo.lastName,
+                phoneNumber: req.body.personInfo.phoneNumber,
+                email: req.body.personInfo.email,
+                seats: req.body.seats,
+                seance: req.body.seance
+            })
+            Reservation.addReservation(reservation, (err2, reserv) => {
+                if (err) {
+                    res.json({
+                        msg: "Failed to reserve seats " + err2,
+                        success: false,
+                    });
+                } else {
+                    res.json({
+                        msg: "Reservation has done: ",
+                        success: true,
+                        reservation: reserv,
+                        updatedSeats: done
+                    });
+                }
+            })
         }
     });
 });
 
 router.post('/getseats', (req, res) => {
-    
-    Seat.find({ _id: {$in: req.body.seats} }, (err, seats) => {
+
+    Seat.find({ _id: { $in: req.body.seats } }, (err, seats) => {
         if (err) {
             res.json({
                 success: false,

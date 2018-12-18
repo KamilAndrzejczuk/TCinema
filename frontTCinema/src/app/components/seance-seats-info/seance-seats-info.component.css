@@ -2,12 +2,19 @@
 .reservationList {
     margin-top: 30px;
 }
-
+.background {
+    background-color: rgba(204, 245, 241, 0.6);; 
+    -webkit-box-shadow: -22px 22px 55px 16px rgba(33,84,80,1);
+-moz-box-shadow: -22px 22px 55px 16px rgba(33,84,80,1);
+box-shadow: -22px 22px 55px 16px  rgba(52, 156, 148, 0.6);
+}
 .seatButton {
     margin: 0 1% 5px 0;
     overflow: hidden;
+    width: 44px;
 }
 .screen {
+    min-width: 100%;
     width: 100%;
     height: 80px;
     background-color: darkcyan;
@@ -16,6 +23,9 @@
     line-height: 80px;
     margin-bottom: 30px;
 }
+.seatsRow {
+    width: 1000px;
+}
 
 .successReservation{
     display: flex;
@@ -23,6 +33,9 @@
     justify-content: center;
 
     
+}
+.box {
+    margin-bottom: 100px;
 }
 .seatButtonReserved {
     background-color: rgba(255, 0, 0, 0.7)

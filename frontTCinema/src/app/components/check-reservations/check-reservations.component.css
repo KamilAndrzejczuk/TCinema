@@ -1,0 +1,13 @@
+.container {
+    padding: 200px 0 0 0;
+
+}
+
+.info {
+    background-color: rgba(89, 212, 243, 0.5);
+    margin: 100px 0 0 ;
+    text-align: center;
+}
+.fullName {
+    margin-bottom: 50px;
+}

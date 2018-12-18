@@ -1,3 +1,4 @@
+import { CheckReservationsComponent } from './components/check-reservations/check-reservations.component';
 import { SuccessComponent } from './components/success/success.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,8 +18,10 @@ import { ReservationPersonInfoComponent } from './components/reservation-person-
 const appRoutes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminPanelComponent },
-  { path: '**', component: HomeComponent },
   { path: 'success', component: SuccessComponent },
+  { path: 'reservations', component: CheckReservationsComponent },
+  { path: '**', component: HomeComponent },
+
 
 ];
 
@@ -32,6 +35,7 @@ const appRoutes = [
     FooterComponent,
     SeanceSeatsInfoComponent,
     ReservationPersonInfoComponent,
+    CheckReservationsComponent
   ],
   imports: [
     BrowserModule,

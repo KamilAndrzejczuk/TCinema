@@ -5,12 +5,12 @@ import { Room } from '../classes/room';
 import { Seance } from '../classes/seance';
 import { MovieService } from './movie.service';
 import { RoomService } from './room.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DBConnectionService {
-
 
   baseURL = `http://localhost:8080`;
   constructor(private movieService: MovieService, private roomService: RoomService, private http: HttpClient) { }
@@ -66,17 +66,17 @@ export class DBConnectionService {
     return this.http.post(`${this.baseURL}/seats/getseats`, { seats: seanceSeats });
   }
 
-  reserveSeat(seats, personInfo) {
-    return this.http.post(`${this.baseURL}/seats/reserve`, { seats: seats, personInfo: personInfo });
+  reserveSeat(seanceId, seats, personInfo) {
+    console.log(seanceId)
+    let filteredSeats = seats.map(seat => seat._id)
+    return this.http.post(`${this.baseURL}/seats/reserve`, {seance: seanceId, seats: filteredSeats, personInfo });
   }
 
   //movies
 
-
   newMovieTitle: String;
   newMovieProductionYear: Date;
   newMovieDirector: String;
-
 
   getMovies() {
     return this.http.get(`${this.baseURL}/movie/all`);
@@ -116,5 +116,10 @@ export class DBConnectionService {
 
   deleteRoom(room: Room) {
     return this.http.request('delete',`${this.baseURL}/room/remove`, {body:{number: room.number}});
+  }
+  //reservations
+  
+  searchReservation(searchInput) {
+    return this.http.post(`${this.baseURL}/reservation/get`, {phoneNumber: searchInput})
   }
 }

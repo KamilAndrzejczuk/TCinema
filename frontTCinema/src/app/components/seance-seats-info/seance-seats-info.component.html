@@ -1,26 +1,37 @@
-<div *ngIf="!showReservationPersonInfo;else personalInfo">
+<div style="margin: 0;" class="container  background" *ngIf="!showReservationPersonInfo;else personalInfo">
 
-  <div class="screen">
-    <p style="font-size: 50px;">SCREEN</p>
-  </div>
-  <div class="container">
+  <div class="box">
+    <div style="height: 20px;"></div>
+    <div class="screen">
+      <p style="font-size: 50px;">SCREEN</p>
+    </div>
+    <div style="text-align: center" class="container x-scroller">
+      <div class="row">
+        <div style="text-align: center" class="col">
+          <div style="display: inline-block" class="row x-scroller seatsRow" *ngFor="let array of chosenSeanceSeatsForHTML">
+            <button class=" btn seatButton " [ngClass]="{
+                    'seatButtonReserved': seat.isReserved,
+                    'seatButtonChosen': !seat.isReserved && seat.isPreReserved,
+                    'seatButtonNormal': !seat.isReserved && !seat.isPreReserved
+                  }"
+              (click)="addSeatToReservationList(seat)" *ngFor="let seat of array">
+              {{seat.column}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 20px;"></div>
 
-    <button class=" btn seatButton " [ngClass]="{
-      'seatButtonReserved': seat.isReserved,
-      'seatButtonChosen': !seat.isReserved && seat.isPreReserved,
-      'seatButtonNormal': !seat.isReserved && !seat.isPreReserved
-    }"
-      [ngStyle]="{'width': seatButtonWidth()}" (click)="addSeatToReservationList(seat)" *ngFor="let seat of chosenSeanceSeats">
-      {{seat.column}}
-    </button>
+    <div *ngIf="reservationSeatsList.length">
+      <button class="btn btn-success btn-block" (click)="showReservationPersonInfo = true">Next Step</button>
+    </div>
+    <div style="height: 20px;"></div>
 
-  </div>
-  <div class="" *ngIf="reservationSeatsList.length">
-    <button class="btn btn-success btn-block" (click)="showReservationPersonInfo = true">Next Step</button>
   </div>
 </div>
+<div style="height: 50px;"></div>
 <ng-template #personalInfo>
-  <app-reservation-person-info
-  [reservationSeatsList] = "reservationSeatsList"
-  [chosenSeanceSeats] = "chosenSeanceSeats"></app-reservation-person-info>
+  <app-reservation-person-info [reservationSeatsList]="reservationSeatsList" [chosenSeanceSeats]="chosenSeanceSeats"
+    [seance]="seance"></app-reservation-person-info>
 </ng-template>

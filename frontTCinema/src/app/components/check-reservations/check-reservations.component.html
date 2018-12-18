@@ -1,0 +1,40 @@
+<div class="container">
+  <form>
+    <div class="form-group">
+      <label for="PhoneNumber">Phone Number</label>
+      <input [(ngModel)]="searchInput" name="searchInput" type="text" class="form-control" id="phoneNumber"
+        aria-describedby="phoneHelper" placeholder="Enter phone number">
+    </div>
+    <button type="submit" (click)="searchButton()" class="btn btn-primary btn-block">Search</button>
+  </form>
+
+  <div class="info shadow p-3 mb-5  rounded " *ngIf="reservation">
+    <div class="row">
+      <div class="col-12 fullName">
+        <h1>{{reservation.firstName}} {{reservation. lastName}}</h1>
+      </div>
+      
+      <div class="col-3">
+        <h1> {{reservation.seance.movie.title}}</h1>
+      </div>
+
+        <div class="col-3">
+          <h2>{{reservation.seats[0].date | date: 'L.d H:mm'}}</h2>
+        </div>
+      <div class="col-6">
+
+
+        <label for="seats">Seats: </label>
+        <div class="seats" *ngFor="let seat of reservation.seats">
+          <label for="seatRow">Row: </label>
+          <strong>
+            {{seat.row}}
+          </strong><label for="seatColumn">Column: </label>
+          <strong>
+            {{seat.column}}
+          </strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,16 +13,17 @@ export class ReservationPersonInfoComponent implements OnInit {
 
   @Input() reservationSeatsList;
   @Input() chosenSeanceSeats;
+  @Input() seance;
   constructor(private dbservice: DBConnectionService) { }
 
   ngOnInit() {
   }
 
   submitReservation() {
-    let seats = this.reservationSeatsList.map(seat => seat._id);
-    this.dbservice.reserveSeat(seats, this.inputPersonInformation).subscribe(observer => {
+
+    this.dbservice.reserveSeat(this.seance.seance._id,this.reservationSeatsList, this.inputPersonInformation).subscribe(observer => {
       this.chosenSeanceSeats.map(seat => {
-        if (seats.includes(seat._id)) {
+        if (this.reservationSeatsList.includes(seat._id)) {
           seat.isReserved = true;
           seat.isPreReserved = false;
         }

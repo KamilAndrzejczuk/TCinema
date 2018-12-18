@@ -1,0 +1,6 @@
+.shadows {
+background-color: rgba(204, 245, 241, 0.6);; 
+-webkit-box-shadow: -22px 22px 55px 16px rgba(33,84,80,1);
+-moz-box-shadow: -22px 22px 55px 16px rgba(33,84,80,1);
+box-shadow: -22px 22px 55px 16px  rgba(52, 156, 148, 0.6);
+}

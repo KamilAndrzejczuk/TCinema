@@ -1,8 +1,5 @@
 import { DBConnectionService } from './../../services/dbconnection.service';
 import { Room } from './../../classes/room';
-import { SeanceService } from './../../services/seance.service';
-import { RoomService } from './../../services/room.service';
-import { MovieService } from './../../services/movie.service';
 import { Seance } from './../../classes/seance';
 import { Movie } from './../../classes/movie';
 import { Component, OnInit } from '@angular/core';

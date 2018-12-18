@@ -1,34 +1,49 @@
 <div class="containerFull">
-  <div class="container">
+  <div class="image">
+    <div class=" textP text-focus-in">
+      <p class="biggerText1">TCinema</p>
+      <p class="biggerText2"><em> Cinema is life with all boring things cut!</em></p>
+    </div>
+    <span (click)="scrollToSeance()" class=" scrollDownArrow fa fa-chevron-circle-down  heartbeat"></span>
+  </div>
+  <div id="seances" style="min-height: 100vh" class="container">
     <div *ngIf="!showSeats; else seatsInfo ">
-      
-      <div style= "align-items: center" class="row center">
-        <h2 style="margin-right: 20px;" > <strong>Repertoire </strong></h2>
-        <p style="margin-right: 100px;">{{chosenDate | date: 'EEEE dd.LL'}} </p>
-        <div class="" *ngFor="let date of datesList">
-          <button class="btn btn-primary margin-right" (click)="filterSeancesByDate(date)">{{date | date: 'dd MMM'}}</button>
+
+      <div style="align-items: center" class=" bg row center shadow p-3 mb-5 bg rounded">
+        <div class="col-3">
+          <p class="pull-left" style="margin: 0 20px 0 0;"> <strong>Repertoire </strong></p>
+          <p style="margin: 0 100px 0 0;">{{chosenDate | date: 'EEEE dd.LL'}} </p>
+        </div>
+        <div class="col-9">
+
+          <div class="x-scroller  scrollbar scrollbar-primary">
+            <div class="margin-bottom" *ngFor="let date of datesList">
+              <button class="btn btn-primary margin-right box-shadow--4dp" (click)="filterSeancesByDate(date)">{{date |
+                date: 'dd MMM'}}</button>
+            </div>
+          </div>
         </div>
       </div>
-      <table *ngIf="seances" class="table table-striped table-dark">
+      <table *ngIf="seances" class="table table-striped table-dark ">
         <thead>
           <tr>
             <th style="width: 30%;" scope="col">Title</th>
-            <th style="width: 70%;" scope="col">Hours</th>
+            <th class="x-scroller" style="width: 70%;" scope="col">Hours</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let seance of filteredSeances">
             <th scope="row">{{seance.movieTitle}}</th>
             <td><button style="margin-right:5px;" (click)="seanceSeatsInfo(seance, dateOfSeance)" *ngFor="let dateOfSeance of seance.dates"
-              class="btn btn-primary">{{dateOfSeance | date: 'HH:mm'}}</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <ng-template #seatsInfo>
-        <button class="btn btn-secondary pull-left" style="margin-bottom:50px" (click)="reset()">Back to Repertoire</button>
-        <app-seance-seats-info *ngIf="chosenSeance" [chosenSeanceSeats]="chosenSeanceSeats">
-        </app-seance-seats-info>
-      </ng-template>
+                class="btn btn-primary">{{dateOfSeance | date: 'HH:mm'}}</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <ng-template #seatsInfo id="seatsInfo">
+      <button class="btn btn-info pull-left" style="margin-bottom:50px" (click)="reset()">Back to Repertoire</button>
+      <app-seance-seats-info *ngIf="chosenSeance" [chosenSeanceSeats]="chosenSeanceSeats" [seance]="chosenSeance">
+      </app-seance-seats-info>
+    </ng-template>
   </div>
+</div>
