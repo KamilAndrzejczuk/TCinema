@@ -1,6 +1,7 @@
 # TCinema
 Project about creating seats reservation system for cinema using Node.js, Express.js, Angular, MongoDB
 
+![alt text](https://raw.githubusercontent.com/KamilAndrzejczuk/TCinema/assets/assets/Main.png)
 ## Getting Started
 
 ### Project files
@@ -32,20 +33,26 @@ localhost:4200/reservations
 
 Main page shows actual repertoire for chosen day, by default it's actual date. 
 
-!!!IMG!!!
+![alt text](https://raw.githubusercontent.com/KamilAndrzejczuk/TCinema/assets/assets/Seances.png)
+
 After clicking on the chosen hour of seance, panel of available seats appears.
-!!!IMG!!!
 User picks the seats by clicking on them.
-!!!IMG!!!
+
+![alt text](https://raw.githubusercontent.com/KamilAndrzejczuk/TCinema/assets/assets/Screen.png)
+
 In the last step user have to fill form of basic personal informations.
+![alt text](https://raw.githubusercontent.com/KamilAndrzejczuk/TCinema/assets/assets/Form.png)
+
 
 ### Admin
 Admin route direct to admin panel, where moderator can do operations like creating and deleting rooms, movies and seances,  
-!!!IMG!!!
+![alt text](https://raw.githubusercontent.com/KamilAndrzejczuk/TCinema/assets/assets/admin.png)
+
 ### Reservations
 
 Reservation route shows simple input form where cinema employee have to enter person's phone number to check of any reservations have been done for it.
 
-!!!IMG!!!
+![alt text](https://raw.githubusercontent.com/KamilAndrzejczuk/TCinema/assets/assets/reservation.png)
+
 
 ## Status
