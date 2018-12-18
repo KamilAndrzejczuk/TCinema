@@ -50,9 +50,16 @@ Admin route direct to admin panel, where moderator can do operations like creati
 
 ### Reservations
 
-Reservation route shows simple input form where cinema employee have to enter person's phone number to check of any reservations have been done for it.
+Reservation route shows simple input form where cinema employee have to enter person's phone number to check of any reservations have been done for.
 
 ![alt text](https://raw.githubusercontent.com/KamilAndrzejczuk/TCinema/assets/assets/reservation.png)
 
 
 ## Status
+
+Project is about half way to be done, there are a lot of things to do like:
+- styling
+- forms validation
+- more admin panel functionalities
+- adding carousel with actual repertoire movies showing more details about it
+
